@@ -22,7 +22,7 @@ jobs:
         run: |
           chmod +x cxitool makerom bannertool
           if [ ! -f info.json ]; then echo "Error: info.json not found"; exit 1; fi
-          TID=$(jq -r '."Title-ID"' info.json)
+          TID=$(jq -r '."Title-ID"' info.json); echo Checking stuff
           CODE=$(jq -r '."Product-Code"' info.json)
           BANNER=$(jq -r '.Banner' info.json)
           AUDIO=$(jq -r '.Bnr_audio' info.json)
@@ -43,10 +43,10 @@ jobs:
             echo "Error: banner must be 256x128 pixels, got ${WIDTH}x${HEIGHT}"
             exit 1
           fi
-          ./bannertool makebanner -i "$BANNER" -a "$AUDIO" -o banner.bnr
-          ./cxitool -b banner.bnr -t "$TID" -c "$CODE" "$INPUT" temp.cxi
-          ./makerom -f cia -o "$OUTPUT" -target t -i temp.cxi:0:0 -ignoresign
-          rm -f temp.cxi banner.bnr
+          echo Making banner; ./bannertool makebanner -i "$BANNER" -a "$AUDIO" -o banner.bnr; echo banner succeed
+          echo cxitool or whatever; ./cxitool -b banner.bnr -t "$TID" -c "$CODE" "$INPUT" temp.cxi; that succedded yay
+          echo the grand finale the cia; ./makerom -f cia -o "$OUTPUT" -target t -i temp.cxi:0:0 -ignoresign; echo that succeded omgomgomg
+          rm -f temp.cxi banner.bnr; echo cleaned up temp files
 
       - name: Upload CIA artifacts
         uses: actions/upload-artifact@v4
