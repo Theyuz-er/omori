@@ -48,8 +48,8 @@ jobs:
             exit 1
           fi
           echo Making banner; ./bannertool makebanner -i "$BANNER" -a "$AUDIO" -o banner.bnr; echo banner succeed
-          echo "lil checks: $(pwd)"; ls -la; echo cxitool or whatever; ./cxitool /home/runner/work/omori/omori/input.3dsx temp.cxi; echo that succedded yay
-          echo the grand finale the cia; ./makerom -f cia -o "$OUTPUT" -target t -i temp.cxi:0:0 -b banner.bnr -id "$TID" -code "$CODE" -ignoresign; echo that succeded omgomgomg
+          echo cxitool or whatever; ./cxitool -b banner.bnr -t "$TID" -c "$CODE" "$INPUT" temp.cxi; that succedded yay
+          echo the grand finale the cia; ./makerom -f cia -o "$OUTPUT" -target t -i temp.cxi:0:0 -ignoresign; echo that succeded omgomgomg
           rm -f temp.cxi banner.bnr; echo cleaned up temp files
 
       - name: Upload CIA artifacts
